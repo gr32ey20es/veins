@@ -25,4 +25,8 @@ package route.examples.route;
 network Scenario extends org.car2x.veins.nodes.Scenario
 {
     submodules:
+        rsu[1]: org.car2x.veins.nodes.RSU
+        {
+			@display("p=150,140;i=veins/sign/yellowdiamond;is=vs");
+        }
 }
