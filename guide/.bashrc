@@ -130,15 +130,8 @@ omnet()
     omnetpp;
 }
 
-vein-gui() 
-{
-    veins_launchd -vv -c sumo-gui; 
-}
-
-vein() 
-{
-    veins_launchd -vv -c sumo; 
-}
+alias vein-gui='veins_launchd -vv -c sumo-gui;'
+alias vein='veins_launchd -vv -c sumo;'
 
 md() 
 { 
@@ -155,3 +148,5 @@ grepa()
     grep -n "$1" $(finda "$2"); 
 }
 
+alias utag='ctags -R --sort=no --c++-kinds=+p-n --fields=+iaS\
+                     --extras=+q --language-force=C++;'
