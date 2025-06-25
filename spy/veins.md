@@ -46,3 +46,6 @@ Manages the information given by TraCI
 
 --- Maybe, changeRoute is an important function!
 Yeah, TraCICommandInterface.cc - most important reference!
+
+>> changeVehicleRoute must contain the current roadId - 0th element
+

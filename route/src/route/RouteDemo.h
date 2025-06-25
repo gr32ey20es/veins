@@ -7,6 +7,9 @@ namespace route { class RouteDemo; }
 
 class ROUTE_API route::RouteDemo : public veins::DemoBaseApplLayer
 {
+private:
+    uint8_t stamp_t;
+
 public:
     void initialize(int stage) override;
     void finish() override;

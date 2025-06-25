@@ -29,9 +29,12 @@ Define_Module(route::RouteDemoRSU);
 void RouteDemoRSU::initialize(int stage)
 {
     DemoBaseApplLayer::initialize(stage);
-    if (stage == 0) {
+    if (stage == 0) 
+    {
         // Initializing members and pointers of your application goes here
         EV << "Initializing " << par("appName").stringValue() << std::endl;
+
+        stamp_t = 0;
     }
     else if (stage == 1) {
         // Initializing members that require initialized other modules goes here
@@ -50,10 +53,13 @@ void RouteDemoRSU::onBSM(DemoSafetyMessage* bsm)
     // code for handling the message goes here
 }
 
+// Your application has received a data message from another car or RSU code 
+// for handling the message goes here, see TraciDemo11p.cc for examples
 void RouteDemoRSU::onWSM(BaseFrame1609_4* wsm)
 {
-    // Your application has received a data message from another car or RSU
-    // code for handling the message goes here, see TraciDemo11p.cc for examples
+    RouteDemoMessage* rdm;
+
+    rdm = (RouteDemoMessage*) wsm;
 }
 
 void RouteDemoRSU::onWSA(DemoServiceAdvertisment* wsa)
@@ -69,9 +75,10 @@ void RouteDemoRSU::handleSelfMsg(cMessage* msg)
     // it is important to call the DemoBaseApplLayer function for BSM and WSM transmission
 }
 
+// The vehicle has moved. Code that reacts to new positions goes here.
+// Member variables such as currentPosition and currentSpeed are updated 
+// in the parent class
 void RouteDemoRSU::handlePositionUpdate(cObject* obj)
 {
     DemoBaseApplLayer::handlePositionUpdate(obj);
-    // the vehicle has moved. Code that reacts to new positions goes here.
-    // member variables such as currentPosition and currentSpeed are updated in the parent class
 }

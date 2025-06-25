@@ -120,33 +120,28 @@ fi
 # User-Defined
 PROMPT_DIRTRIM=3
 
-export CODENV=$HOME/Code/Environment
-export SUMO_HOME=$CODENV/sumo-1.22.0
-export PATH=$PATH:$SUMO_HOME:$CODENV/sumo-1.22.0/bin:$CODENV/omnetpp-6.1:$CODENV/omnetpp-6.1/bin:$CODENV/veins-5.3.1:$CODENV/veins-5.3.1/bin
+export CODE_ENV=$HOME/Code/Environment
+export SUMO_HOME=$CODE_ENV/sumo-1.22.0
+export VEINS_HOME=$CODE_ENV/veins-5.3.1
+export OMNET_HOME=$CODE_ENV/omnetpp-6.1
 
-omnet()
-{
-    source $CODENV/omnetpp-6.1/setenv;
-    omnetpp;
-}
+export PATH=$PATH:\
+$SUMO_HOME:$SUMO_HOME/bin:\
+$VEINS_HOME:$VEINS_HOME/bin:\
+$OMNET_HOME:$OMNET_HOME/bin
 
+alias omnet='source $OMNET_HOME/setenv; omnetpp;'
 alias vein-gui='veins_launchd -vv -c sumo-gui;'
 alias vein='veins_launchd -vv -c sumo;'
 
-md() 
-{ 
-    pandoc $1.md | lynx -stdin; 
-}
+md () { pandoc $1.md | lynx -stdin; }
 
-finda() 
+finda () { find . -name ${1:-"*.cc"}; }
+grepa () { grep -n "$1" $(finda "$2"); }
+
+utags() 
 {
-    find . -name "${1:-"*.cc"}"; 
+    utags_temp="Environment veins";
+    ctags -R --sort=no --c++-kinds=+p-n --fields=+iaS \
+             --extras=+q --language-force=C++ ${1:-$utags_temp};
 }
-
-grepa() 
-{ 
-    grep -n "$1" $(finda "$2"); 
-}
-
-alias utag='ctags -R --sort=no --c++-kinds=+p-n --fields=+iaS\
-                     --extras=+q --language-force=C++;'

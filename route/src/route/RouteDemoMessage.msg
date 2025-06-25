@@ -4,5 +4,5 @@ namespace route;
 
 packet RouteDemoMessage extends veins::BaseFrame1609_4 
 {
-  
+    string roadId;
 }

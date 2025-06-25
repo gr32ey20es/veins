@@ -1,0 +1,18 @@
+%description:
+Test IdAllot - a data structure
+
+%includes:
+#include "route/allotment/IdAllot.cc"
+
+%activity:
+EV << "$2y$10$ZkUgzIP.x1O9ZPioPsmX..QLVqZ5SMEpSsVyzmD7oiQyKKDpB1JN2\n" << "\n";
+
+IdAllot* idAllot = new IdAllot ();
+idAllot->setCount (10);
+EV << "count: " << (uint32_t) idAllot->getCount ();
+
+%contains: stdout
+$2y$10$ZkUgzIP.x1O9ZPioPsmX..QLVqZ5SMEpSsVyzmD7oiQyKKDpB1JN2
+
+count: 10
+
