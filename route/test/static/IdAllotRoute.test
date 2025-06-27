@@ -7,12 +7,37 @@ Test IdAllot - a data structure
 %activity:
 EV << "$2y$10$ZkUgzIP.x1O9ZPioPsmX..QLVqZ5SMEpSsVyzmD7oiQyKKDpB1JN2\n" << "\n";
 
-IdAllot* idAllot = new IdAllot ();
-idAllot->setCount (10);
-EV << "count: " << (uint32_t) idAllot->getCount ();
+typedef struct
+{
+    int data;
+} SampleStruct;
+
+IdAllot<SampleStruct>* idAllot;
+SampleStruct* ss;
+
+idAllot = new IdAllot<SampleStruct> ();
+idAllot->setSize (1);
+idAllot->setSize (31);
+
+ss = idAllot->getElem (30);
+ss->data = 2;
+EV << "data: " << ss->data;
+
+idAllot->setSize (100);
+idAllot->setSize (51);
+
+ss = idAllot->getElem (50);
+ss->data = 1;
+EV << ss->data;
+
+idAllot->setSize (30);
+idAllot->setSize (31);
+
+ss = idAllot->getElem (30);
+EV << ss->data;
 
 %contains: stdout
 $2y$10$ZkUgzIP.x1O9ZPioPsmX..QLVqZ5SMEpSsVyzmD7oiQyKKDpB1JN2
 
-count: 10
+data: 210
 

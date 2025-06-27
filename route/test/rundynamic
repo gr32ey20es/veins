@@ -1,0 +1,22 @@
+#! /bin/sh
+#
+# usage: rundynamic [<testfile>]
+# without args, runs all *.gdbcmd files in the current directory
+#
+
+OPP_SRC=../src
+
+TESTFILE=$*
+if [ "x$TESTFILE" != "x" ]
+then
+    TESTFILE=$PWD/$TESTFILE
+    (cd $OPP_SRC; ./opp $TESTFILE) || exit 1
+else
+    for file in $(find -name "*.gdbcmd");
+    do
+        TESTFILE=$PWD/$file
+        (cd $OPP_SRC; ./opp $TESTFILE) || exit 1
+    done
+fi
+
+mv $OPP_SRC/gdb.txt ./work

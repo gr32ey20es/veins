@@ -29,12 +29,13 @@ cp -pPR $OMNET_HOME/lib work/       # OSX dos not support cp -a
 
 #export NEDPATH=.:../lib
 EXTRA_INCLUDES="-I$OMNET_SRC -I$VEINS_SRC -I../$ROUTE_SRC"
-OPT="--debugger-attach-on-error=true"
+#OPT="--debugger-attach-on-error=true"
 #$MAKE $MAKEOPTIONS -C signalreg
+
 
 opp_test gen -v --args $OPT -- $TESTFILES || exit 1
 echo
-(cd work; opp_makemake -f -o work --deep -i ../$MAKEFRAG_ $EXTRA_INCLUDES; 
+(cd work; opp_makemake -f -o work --deep -i ../$MAKEFRAG_ $EXTRA_INCLUDES;
 $MAKE $MAKEOPTIONS) || exit 1
 echo
 opp_test run -p work$PROGSUFFIX -v --args $OPT -- $TESTFILES || exit 1

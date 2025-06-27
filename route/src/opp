@@ -1,9 +1,28 @@
+#! /bin/sh
+#
+# usage: opp [<testfile>]
+# without args, run as usual
+#
+
+TESTFILE=$*
+COMMAND="opp_run"
+if [ "x$TESTFILE" != "x" ]
+then
+    COMMAND="gdb --command=$TESTFILE --args opp_run_dbg -u Cmdenv"
+fi
+
 make MODE=release -j16 all &&\
 cd /home/greyes/Code/veins/route/examples/route &&\
-opp_run omnetpp.ini -m \
+$COMMAND omnetpp.ini -m \
 -l ../../src/route \
 -l ../../../../Environment/veins-5.3.1/src/veins \
 --image-path=../../images:../../../../Environment/veins-5.3.1/images \
 -n ../../src/route:.:\
 ../../../../Environment/veins-5.3.1/examples/veins:\
 ../../../../Environment/veins-5.3.1/src/veins
+
+if [ "x$TESTFILE" != "x" ]
+then
+    cat gdb.txt >> $OLDPWD/gdb.txt &&\
+    rm -f gdb.txt
+fi

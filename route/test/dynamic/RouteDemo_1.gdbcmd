@@ -1,0 +1,22 @@
+set breakpoint pending on
+break RouteDemo::handlePositionUpdate
+run
+#next
+#next
+
+set logging enabled on
+print stamp_t
+set logging enabled off
+
+set logging enabled on
+if stamp_t==0
+    print "Test 1: pass"
+end
+if stamp_t==1
+    print "Test 1: fail"
+end
+set logging enabled off
+
+kill
+quit
+

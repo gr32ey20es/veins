@@ -75,6 +75,7 @@ void RouteDemo::handlePositionUpdate(cObject* obj)
         populateWSM (rdm);
         rdm->setRoadId (mobility->getRoadId ().c_str ());
 
+        //delete (rdm);
         sendDelayedDown (rdm, 1);
     }
 }
