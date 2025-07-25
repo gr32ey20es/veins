@@ -26,6 +26,8 @@ set history=100
 set autoread
 autocmd FocusGained,BufEnter * silent! checktime
 autocmd BufNewFile,BufRead *.test,*.msg set filetype=cpp
+autocmd BufNewFile,BufRead *.gdbcmd     set filetype=sh
+autocmd BufNewFile,BufRead *.tex,*.cls  set syntax=tex
 
 set enc=utf-8
 set fenc=utf-8

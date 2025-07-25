@@ -124,17 +124,28 @@ export CODE_ENV=$HOME/Code/Environment
 export SUMO_HOME=$CODE_ENV/sumo-1.22.0
 export VEINS_HOME=$CODE_ENV/veins-5.3.1
 export OMNET_HOME=$CODE_ENV/omnetpp-6.1
+export CMAKE_HOME=$CODE_ENV/cmake-4.1.0-rc2-linux-x86_64
+export OR_TOOLS=$CODE_ENV/or-tools
 
 export PATH=$PATH:\
 $SUMO_HOME:$SUMO_HOME/bin:\
 $VEINS_HOME:$VEINS_HOME/bin:\
-$OMNET_HOME:$OMNET_HOME/bin
+$OMNET_HOME:$OMNET_HOME/bin:\
+$CMAKE_HOME/bin
 
 alias omnet='source $OMNET_HOME/setenv; omnetpp;'
 alias vein-gui='veins_launchd -vv -c sumo-gui;'
 alias vein='veins_launchd -vv -c sumo;'
 
 md () { pandoc $1.md | lynx -stdin; }
+trex () 
+{ 
+    pdflatex $1 &&\
+    if [ -e $1 ]; 
+    then open $1 
+    else open $1.pdf 
+    fi
+}
 
 finda () { find . -name ${1:-"*.cc"}; }
 grepa () { grep -n "$1" $(finda "$2"); }
@@ -145,3 +156,33 @@ utags()
     ctags -R --sort=no --c++-kinds=+p-n --fields=+iaS \
              --extras=+q --language-force=C++ ${1:-$utags_temp};
 }
+
+ortools ()
+{
+    ortools_target=$(pwd);
+    ortools_filename=${1%.*};
+    ortools_tempcpp=temp_cpp/$ortools_filename/;
+    
+    cd $OR_TOOLS;
+    
+    if [ -d $ortools_tempcpp ]; then
+        cp $ortools_target/$1 $ortools_tempcpp;
+    else
+        mkdir temp_cpp;
+        mkdir $ortools_tempcpp &&\
+        cp $ortools_target/$1 temp_cpp/ &&\
+        make build SOURCE=temp_cpp/$1;
+    fi &&\
+    cp $ortools_target/${ortools_filename}* ${ortools_tempcpp}build/bin &&\
+    cd ${ortools_tempcpp}build && make &&\
+    cd bin && clear && ./$ortools_filename;
+
+    cd $ortools_target;
+}
+
+oortools ()
+{
+    rm -r $OR_TOOLS/temp_cpp;
+    ortools $1;
+}
+
